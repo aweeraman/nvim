@@ -26,9 +26,6 @@ packer.startup(function(use)
     use {"tpope/vim-fugitive"}
     use {"ctrlpvim/ctrlp.vim"}
     use {"folke/tokyonight.nvim"}
-    use {"williamboman/mason.nvim"}
-    use {"williamboman/mason-lspconfig.nvim"}
-    use {"neovim/nvim-lspconfig"}
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
@@ -66,21 +63,3 @@ vim.api.nvim_set_keymap("n", "<F3>", ":SoftPencil <bar> <CR>", {silent = true})
 -- Set plugin-specific options
 vim.g.vimfiler_as_default_explorer = 1
 vim.g.molokai_original = 1
-
--- Mason config
-local servers = { 'clangd' }
-require("mason").setup()
-local mason_lspconfig = require 'mason-lspconfig'
-mason_lspconfig.setup({
-    ensure_installed = { "clangd" }
-})
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-    }
-  end,
-}
-require'lspconfig'.clangd.setup{}
