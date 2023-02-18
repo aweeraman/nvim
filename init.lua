@@ -42,13 +42,13 @@ vim.cmd("colorscheme tokyonight")
 -- Set basic options
 vim.o.hidden = true
 vim.o.title = true
+vim.o.cursorline = true
 vim.bo.tabstop = 8
 vim.bo.softtabstop = 8
 vim.bo.shiftwidth = 8
 vim.bo.expandtab = false
 vim.wo.number = true
 vim.o.mouse = "a"
-vim.o.background = "dark"
 vim.o.termguicolors = true
 
 -- Set custom key mappings
@@ -62,4 +62,3 @@ vim.api.nvim_set_keymap("n", "<F3>", ":SoftPencil <bar> <CR>", {silent = true})
 
 -- Set plugin-specific options
 vim.g.vimfiler_as_default_explorer = 1
-vim.g.molokai_original = 1
