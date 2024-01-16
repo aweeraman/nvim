@@ -11,7 +11,16 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup(
+require('lazy').setup({
+	{
+		'navarasu/onedark.nvim',
+		config = function()
+			require('onedark').setup {
+				style = 'warmer'
+			}
+			require('onedark').load()
+		end,
+	},
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v3.x",
@@ -24,5 +33,15 @@ require('lazy').setup(
 		config = function()
 			vim.keymap.set('n', '<C-O>', ':Neotree toggle<CR>')
 		end,
-	}	
-)
+	},
+	{
+		'nvim-lualine/lualine.nvim',
+		opts = {
+			options = {
+				icons_enabled = false,
+				component_separators = '|',
+				section_separators = '',
+			},
+		},
+	},
+})
