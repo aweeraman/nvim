@@ -44,4 +44,12 @@ require('lazy').setup({
 			},
 		},
 	},
+	{
+		'sindrets/diffview.nvim',
+		config = function()
+			vim.keymap.set('n', '<C-D>', ':DiffviewOpen<CR>')
+			vim.keymap.set('n', '<C-H>', ':DiffviewFileHistory<CR>')
+			vim.keymap.set('n', '<leader>c', ':DiffviewClose<CR>')
+		end,
+	}
 })
