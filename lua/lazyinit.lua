@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({
+require('lazy').setup(
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v3.x",
@@ -22,7 +22,7 @@ require('lazy').setup({
 			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 		},
 		config = function()
-			vim.keymap.set('n', '<C-O>', ':Neotree<CR>')
+			vim.keymap.set('n', '<C-O>', ':Neotree toggle<CR>')
 		end,
-	}
-})
+	}	
+)
