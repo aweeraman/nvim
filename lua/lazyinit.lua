@@ -30,9 +30,9 @@ require('lazy').setup({
 			"MunifTanjim/nui.nvim",
 			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 		},
-		config = function()
-			vim.keymap.set('n', '<C-O>', ':Neotree toggle<CR>')
-		end,
+		keys = {
+				{ "<leader>o", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
+		},
 	},
 	{
 		'nvim-lualine/lualine.nvim',
@@ -46,10 +46,22 @@ require('lazy').setup({
 	},
 	{
 		'sindrets/diffview.nvim',
-		config = function()
-			vim.keymap.set('n', '<leader>d', ':DiffviewOpen<CR>')
-			vim.keymap.set('n', '<leader>h', ':DiffviewFileHistory<CR>')
-			vim.keymap.set('n', '<leader>c', ':DiffviewClose<CR>')
-		end,
+		keys = {
+				{ "<leader>dd", "<cmd>DiffviewOpen<cr>", desc = "Diffview Open" },
+				{ "<leader>dh", "<cmd>DiffviewFileHistory<cr>", desc = "Diffview File History" },
+				{ "<leader>dc", "<cmd>DiffviewClose<cr>", desc = "Diffview Close" },
+		},
+	},
+	{
+		'stevearc/aerial.nvim',
+		opts = {},
+		keys = {
+				{ "<leader>a", "<cmd>AerialToggle!<cr>", desc = "Aerial Toggle" },
+		},
+		-- Optional dependencies
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons"
+		},
 	}
 })
