@@ -63,5 +63,14 @@ require('lazy').setup({
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-tree/nvim-web-devicons"
 		},
+	},
+	{
+		'nvim-telescope/telescope.nvim', tag = '0.1.5',
+		dependencies = { 'nvim-lua/plenary.nvim' },
+		keys = {
+				{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Telescope Find Files" },
+				{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Telescope Live Grep" },
+				{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Telescope Buffers" },
+		},
 	}
 })
