@@ -1,0 +1,53 @@
+#!/bin/sh
+
+_basepath=$(dirname $0)
+_abspath=$(readlink -f ${_basepath})
+_src=${_abspath}/src
+_log=${_abspath}/install.log
+_installpath="~/"
+
+echo "Installing apt dependencies..."
+
+sudo apt-get update && sudo apt-get install -y \
+  autoconf automake cmake g++ gettext libncurses5-dev libtool libtool-bin \
+  libunibilium-dev libunibilium4 ninja-build pkg-config python3-pip \
+  software-properties-common unzip rbenv ruby ruby-dev perl 2>&1 | tee ${_log}
+
+echo "Installing python dependencies..."
+pip3 install --user --break-system-packages setuptools 2>&1 | tee ${_log}
+pip3 install --user --break-system-packages --upgrade pynvim 2>&1 | tee ${_log}
+
+echo "Installing ruby dependencies..."
+gem install neovim 2>&1 | tee ${_log}
+
+echo "Installing node dependencies..."
+npm install -g neovim 2>&1 | tee ${log}
+if [ $? -ne 0 ]; then
+	echo "Encountered error. You may need to change permissions of module directory in order to proceed."
+	exit 1
+fi
+
+echo "Installing perl dependencies..."
+curl -L https://cpanmin.us | sudo perl - App::cpanminus 2>&1 | tee ${_log}
+cpanm -n Neovim::Ext
+
+echo "Downloading and building from source..."
+if [ ! -e ${_src} ]; then
+	mkdir -p ${_src}
+	git clone https://github.com/neovim/neovim ${_src} 2>&1 | tee ${_log}
+	cd ${_src}
+else
+	cd ${_src}
+	git pull origin 2>&1 | tee ${_log}
+fi
+	
+rm -rf ./build/ ./.deps
+make distclean 2>&1 | tee ${_log}
+make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=${_installpath}" 2>&1 | tee ${_log}
+make install 2>&1 | tee ${_log}
+
+if [ $? -eq 0 ]; then
+	echo "Installation successful." | tee ${_log}
+else
+	echo "Installation failed." | tee ${_log}
+fi
