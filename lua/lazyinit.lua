@@ -73,5 +73,11 @@ require('lazy').setup({
 				{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Telescope Live Grep" },
 				{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Telescope Buffers" },
 		},
+	},
+	{
+		'github/copilot.vim',
+		keys = {
+				{ "<leader>c", "<cmd>Copilot panel<cr>", desc = "Copilot Panel" },
+		},
 	}
 })
