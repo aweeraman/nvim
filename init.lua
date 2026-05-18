@@ -166,7 +166,15 @@ vim.pack.add({
 		version = "v3.17.0",
 	}
 })
-require("which-key").setup()
+require("which-key").setup({
+	win = {
+		height = { min = 4, max = 0.85 },
+		width = { min = 20, max = 0.5 },
+	},
+	layout = {
+		spacing = 3,
+	},
+})
 
 -- telescope
 
@@ -238,3 +246,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts("Show line diagnostics"))
 	end,
 })
+
+-- mini.icons
+
+vim.pack.add({
+	{
+		src = 'https://github.com/nvim-mini/mini.icons',
+		version = 'v0.17.0'
+	}
+})
+
+require('mini.icons').setup()
