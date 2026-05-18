@@ -101,7 +101,14 @@ vim.keymap.set("n", "<leader>l", "<C-w>l", { desc = "Move to right window" })
 vim.keymap.set("n", "<leader>h", "<C-w>h", { desc = "Move to left window" })
 vim.keymap.set("n", "<leader>j", "<C-w>j", { desc = "Move to bottom window" })
 vim.keymap.set("n", "<leader>k", "<C-w>k", { desc = "Move to top window" })
-vim.keymap.set("n", "<leader>t", ":Neotree toggle reveal<CR>", { desc = "Toggle Neotree" })
+vim.keymap.set("n", "<leader>t", function()
+	local path = vim.api.nvim_buf_get_name(0)
+	if path ~= "" and vim.fn.filereadable(path) == 1 then
+		vim.cmd("Neotree toggle reveal")
+	else
+		vim.cmd("Neotree toggle")
+	end
+end, { desc = "Toggle Neotree" })
 
 -- Plugins
 
@@ -178,3 +185,56 @@ vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, { desc = "Telesc
 vim.keymap.set("n", "<leader>fg", telescope_builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags, { desc = "Telescope help tags" })
+
+-- LSP
+
+-- Requires: npm install -g typescript typescript-language-server
+vim.lsp.config("ts_ls", {
+	cmd = { "typescript-language-server", "--stdio" },
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+	},
+	root_markers = {
+		"tsconfig.json",
+		"jsconfig.json",
+		"package.json",
+		".git",
+	},
+	init_options = { hostInfo = "neovim" },
+})
+
+vim.lsp.enable("ts_ls")
+
+vim.diagnostic.config({
+	virtual_text = true,
+	signs = true,
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local bufnr = args.buf
+		local opts = function(desc)
+			return { buffer = bufnr, desc = desc }
+		end
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts("Go to definition"))
+		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts("Go to declaration"))
+		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts("Go to implementation"))
+		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts("List references"))
+		vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts("Go to type definition"))
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts("Hover docs"))
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts("Rename symbol"))
+		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
+		vim.keymap.set("n", "<leader>cf", function()
+			vim.lsp.buf.format({ async = true })
+		end, opts("Format buffer"))
+		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts("Previous diagnostic"))
+		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts("Next diagnostic"))
+		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts("Show line diagnostics"))
+	end,
+})
