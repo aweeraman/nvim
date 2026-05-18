@@ -184,6 +184,7 @@ require("snacks").setup({
 		},
 	},
 	indent = { enabled = true },
+	lazygit = { enabled = true },
 	input = { enabled = true },
 	picker = { enabled = true },
 	notifier = { enabled = true },
@@ -248,6 +249,26 @@ vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, { desc = "Telesc
 vim.keymap.set("n", "<leader>fg", telescope_builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags, { desc = "Telescope help tags" })
+
+-- neogit
+
+vim.pack.add({
+	{
+		src = "https://github.com/neogitorg/neogit",
+		version = "v3.0.0",
+	},
+	"https://github.com/nvim-lua/plenary.nvim",
+})
+
+require("neogit").setup({})
+
+vim.keymap.set("n", "<leader>gg", function()
+	require("neogit").open()
+end, { desc = "Open Neogit" })
+
+vim.keymap.set("n", "<leader>gl", function()
+	Snacks.lazygit()
+end, { desc = "Open Lazygit" })
 
 -- LSP
 
