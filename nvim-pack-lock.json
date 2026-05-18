@@ -22,6 +22,11 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "telescope.nvim": {
+      "rev": "5255aa27c422de944791318024167ad5d40aad20",
+      "src": "https://github.com/nvim-telescope/telescope.nvim",
+      "version": "'v0.2.2'"
+    },
     "tokyonight.nvim": {
       "rev": "545d72cde6400835d895160ecb5853874fd5156d",
       "src": "https://github.com/folke/tokyonight.nvim",

@@ -1,6 +1,7 @@
 vim.cmd("syntax on")
 vim.cmd("filetype plugin indent on")
 vim.opt.termguicolors = true
+vim.opt.shortmess:append("I")
 
 vim.opt.title = true
 vim.opt.cursorline = true
@@ -159,3 +160,21 @@ vim.pack.add({
 	}
 })
 require("which-key").setup()
+
+-- telescope
+
+vim.pack.add({
+	{
+		src = "https://github.com/nvim-telescope/telescope.nvim",
+		version = "v0.2.2"
+	},
+	"https://github.com/nvim-lua/plenary.nvim",
+})
+
+require('telescope').setup()
+
+local telescope_builtin = require('telescope.builtin')
+vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, { desc = "Telescope find files" })
+vim.keymap.set("n", "<leader>fg", telescope_builtin.live_grep, { desc = "Telescope live grep" })
+vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers, { desc = "Telescope buffers" })
+vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags, { desc = "Telescope help tags" })
