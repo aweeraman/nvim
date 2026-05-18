@@ -100,6 +100,7 @@ vim.keymap.set("n", "<leader>l", "<C-w>l", { desc = "Move to right window" })
 vim.keymap.set("n", "<leader>h", "<C-w>h", { desc = "Move to left window" })
 vim.keymap.set("n", "<leader>j", "<C-w>j", { desc = "Move to bottom window" })
 vim.keymap.set("n", "<leader>k", "<C-w>k", { desc = "Move to top window" })
+vim.keymap.set("n", "<leader>t", ":Neotree toggle reveal<CR>", { desc = "Toggle Neotree" })
 
 -- Plugins
 
@@ -129,6 +130,26 @@ require("tokyonight").setup()
 
 -- set the theme
 vim.cmd.colorscheme("onedark")
+
+-- neo-tree
+
+vim.pack.add({
+	{
+		src = "https://github.com/nvim-neo-tree/neo-tree.nvim",
+		version = "3.41.0"
+	},
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/MunifTanjim/nui.nvim",
+	"https://github.com/nvim-tree/nvim-web-devicons",
+})
+
+require("neo-tree").setup({
+	filesystem = {
+		follow_current_file = {
+			enabled = true,
+		},
+	},
+})
 
 -- which-key.nvim
 vim.pack.add({
