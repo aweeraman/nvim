@@ -5,7 +5,9 @@ vim.opt.shortmess:append("I")
 
 vim.opt.title = true
 vim.opt.cursorline = true
-vim.opt.wrap = false
+vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.breakindent = true
 vim.opt.number = true
 vim.opt.mouse = "a"
 vim.opt.termguicolors = true
@@ -310,3 +312,14 @@ vim.pack.add({
 })
 
 require('mini.icons').setup()
+
+-- markview.nvim
+
+vim.pack.add({
+	{
+		src = "https://github.com/OXY2DEV/markview.nvim",
+		version = "v28.3.0",
+	},
+})
+
+require("markview").setup({})
