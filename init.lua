@@ -270,11 +270,33 @@ vim.keymap.set("n", "<leader>gl", function()
 	Snacks.lazygit()
 end, { desc = "Open Lazygit" })
 
+-- blink.cmp
+
+vim.pack.add({
+	{
+		src = "https://github.com/saghen/blink.cmp",
+		version = "v1.10.2",
+	},
+})
+
+require("blink.cmp").setup({
+	keymap = { preset = "default" },
+	sources = {
+		default = { "lsp", "path", "snippets", "buffer" },
+	},
+	fuzzy = { implementation = "prefer_rust_with_warning" },
+	signature = { enabled = true },
+	completion = {
+		documentation = { auto_show = true },
+	},
+})
+
 -- LSP
 
 -- Requires: npm install -g typescript typescript-language-server
 vim.lsp.config("ts_ls", {
 	cmd = { "typescript-language-server", "--stdio" },
+	capabilities = require("blink.cmp").get_lsp_capabilities(),
 	filetypes = {
 		"javascript",
 		"javascriptreact",
