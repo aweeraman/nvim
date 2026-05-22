@@ -366,3 +366,28 @@ vim.pack.add({
 })
 
 require("markview").setup({})
+
+-- markdown-preview.nvim
+
+vim.api.nvim_create_autocmd("PackChanged", {
+	callback = function(ev)
+		if ev.data.spec.name == "markdown-preview.nvim" and (ev.data.kind == "install" or ev.data.kind == "update") then
+			if not ev.data.active then
+				vim.cmd.packadd("markdown-preview.nvim")
+			end
+			vim.fn["mkdp#util#install"]()
+		end
+	end,
+})
+
+vim.pack.add({
+	{
+		src = "https://github.com/iamcco/markdown-preview.nvim",
+		version = "v0.0.10",
+	},
+})
+
+vim.g.mkdp_filetypes = { "markdown" }
+
+vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<CR>", { desc = "Markdown preview" })
+vim.keymap.set("n", "<leader>ms", "<cmd>MarkdownPreviewStop<CR>", { desc = "Stop markdown preview" })
